@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-
-public class WallController : MonoBehaviourPun
+public class WallController : MonoBehaviourPunCallbacks
 {
     public GameObject wall;
     public Vector3 moveAmount;
@@ -47,26 +46,15 @@ public class WallController : MonoBehaviourPun
 
         if (player1Step == 1 && player2Step == 1)
         {
-            wall.transform.position += moveAmount;
-            //MoveWall2();
+            pv.RPC("MoveWall", RpcTarget.All);
             player1Step = 0;
             player2Step = 0;
         }
     }
 
     [PunRPC]
-    protected virtual void MoveWall()
+    public void MoveWall()
     {
-        Debug.Log("MoveWall Input");
-        //wall.transform.position += moveAmount;
-    }
-
-
-    void MoveWall2()
-    {
-        Debug.Log("MoveWall 2 Input");
         wall.transform.position += moveAmount;
     }
-
-
 }

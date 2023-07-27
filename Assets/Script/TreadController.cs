@@ -5,7 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 
 // TreadController.cs
-public class TreadController : MonoBehaviourPun
+public class TreadController : MonoBehaviourPunCallbacks
 {
     public static event Action<int> PlayerSteppedOn;
 

@@ -32,14 +32,12 @@ public class Movement : MonoBehaviour
             obj = GameObject.FindWithTag("CameraRoot");
             virtualCamera.Follow = obj.transform;
         }
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q)) 
+        if(Input.GetKeyDown(KeyCode.Q)&& pv.IsMine) 
         {
             PhotonNetwork.Instantiate("DoorTest", transform.position, transform.rotation, 0);
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -338,6 +338,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3648268014664817878, guid: ae12454549ff24243bfb2238fa7f1ad8, type: 3}
   m_PrefabInstance: {fileID: 3648268014489332071}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &463553019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3648268014877787715, guid: ae12454549ff24243bfb2238fa7f1ad8, type: 3}
+  m_PrefabInstance: {fileID: 3648268014489332071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &463553024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463553019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4498b0392a54fe841a44343ba08a933e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wall: {fileID: 463553019}
+  moveAmount: {x: 1, y: 1, z: 1}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +716,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _color: {r: 0.025640488, g: 1, b: 0, a: 1}
   _radius: 0.1
+--- !u!1 &2018290569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3648268016454634806, guid: ae12454549ff24243bfb2238fa7f1ad8, type: 3}
+  m_PrefabInstance: {fileID: 3648268014489332071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2018290574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018290569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7e78916062ea140891569db6b0ca98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2040301198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3648268016446463585, guid: ae12454549ff24243bfb2238fa7f1ad8, type: 3}
+  m_PrefabInstance: {fileID: 3648268014489332071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2040301203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040301198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7e78916062ea140891569db6b0ca98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2078328275
 GameObject:
   m_ObjectHideFlags: 0

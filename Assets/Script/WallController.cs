@@ -47,8 +47,8 @@ public class WallController : MonoBehaviourPun
 
         if (player1Step == 1 && player2Step == 1)
         {
-            //wall.transform.position += moveAmount;
-            MoveWall2();
+            wall.transform.position += moveAmount;
+            //MoveWall2();
             player1Step = 0;
             player2Step = 0;
         }

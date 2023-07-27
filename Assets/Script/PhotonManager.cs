@@ -93,7 +93,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         // 캐릭터 출현 정보를 배열에 저장
         Transform[] points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
-        int index = Random.Range(1, Random.Range(0,points.Length));
+        int index = Random.Range(0, Random.Range(0,points.Length));
 
         // 캐릭터를 생성
         PhotonNetwork.Instantiate("PlayerArmature", points[index].position, points[index].rotation, 0);

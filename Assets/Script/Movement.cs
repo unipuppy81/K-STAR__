@@ -41,5 +41,7 @@ public class Movement : MonoBehaviour
         {
             PhotonNetwork.Instantiate("DoorTest", transform.position, transform.rotation, 0);
         }
+
+        
     }
 }

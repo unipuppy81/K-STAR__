@@ -10,10 +10,19 @@ public class WallController : MonoBehaviourPun
     public Vector3 moveAmount;
     private int player1Step = 0;
     private int player2Step = 0;
+    PhotonView pv;
+
+    private void Start()
+    {
+        pv = photonView;
+        //pv = GameObject.Find("Door").GetComponent<PhotonView>();
+    }
 
     private void OnEnable()
     {
+        Debug.Log("Wall OnEnabled");
         TreadController.PlayerSteppedOn += OnPlayerStep;
+        //TreadController.PlayerSteppedOn += (T) => OnPlayerStep(1);
     }
 
     private void OnDisable()
@@ -23,26 +32,41 @@ public class WallController : MonoBehaviourPun
 
     void OnPlayerStep(int playerActorNumber)
     {
-        if (playerActorNumber == 1)
+        int a = playerActorNumber;
+
+        if (a == 1)
         {
             player1Step = 1;
+            Debug.Log("A1");
         }
-        else if (playerActorNumber == 2)
+        else if (a == 2)
         {
             player2Step = 1;
+            Debug.Log("A2");
         }
 
         if (player1Step == 1 && player2Step == 1)
         {
-            photonView.RPC("MoveWall", RpcTarget.All);
+            //wall.transform.position += moveAmount;
+            MoveWall2();
             player1Step = 0;
             player2Step = 0;
         }
     }
 
     [PunRPC]
-    void MoveWall()
+    protected virtual void MoveWall()
     {
+        Debug.Log("MoveWall Input");
+        //wall.transform.position += moveAmount;
+    }
+
+
+    void MoveWall2()
+    {
+        Debug.Log("MoveWall 2 Input");
         wall.transform.position += moveAmount;
     }
+
+
 }

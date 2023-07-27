@@ -13,7 +13,14 @@ public class TreadController : MonoBehaviourPun
     {
         if (other.gameObject.tag == "Player")
         {
+            Debug.Log("Tread Log");
             PlayerSteppedOn?.Invoke(photonView.OwnerActorNr);
         }
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.T)) { PlayerSteppedOn(1); }
+        if (Input.GetKeyUp(KeyCode.O)) { PlayerSteppedOn(2); }
     }
 }

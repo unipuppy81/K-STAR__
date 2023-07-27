@@ -97,6 +97,5 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         // 캐릭터를 생성
         PhotonNetwork.Instantiate("PlayerArmature", points[index].position, points[index].rotation, 0);
-
     }
 }

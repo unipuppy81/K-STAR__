@@ -74,6 +74,23 @@ public class Movement : MonoBehaviour
         {
             PhotonNetwork.Instantiate("Bullet", bulletSpace.transform.position, bulletSpace.transform.rotation, 0);
         }
+        if (Input.GetMouseButtonDown(0) && pv.IsMine)
+        {
+            PhotonNetwork.Instantiate("SlotCar_A", Camera.main.transform.position, Camera.main.transform.rotation, 0);
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            //닿은 곳의 정보
+            RaycastHit hitInfo;
+            //바라본다
+            //Raycast는 기본적으로 bool형을 반환하게 된다. 그런데 인자 값에 out형으로 인자하나를 더 반환하게 된다.
+            if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 30.0f))
+            {
+                //닿았다 (Raycast가 true일때)
+                if (hitInfo.transform.gameObject.tag == "Object")
+                {
+                    Destroy(hitInfo.transform.gameObject);
+                }
+            }
+        }
     }
 
     void ChangeCamera()

@@ -8,6 +8,8 @@ TagManager:
   - CameraRoot
   - Object
   - Bullet
+  - JumpPad
+  - Pickable
   layers:
   - Default
   - TransparentFX

@@ -42,6 +42,6 @@ public class GameManager : MonoBehaviour
         Vector3 pos = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].position;
         Quaternion rot = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].rotation;
         
-        GameObject playerTemp = PhotonNetwork.Instantiate("PlayerA", Vector3.one, Quaternion.identity, 0);
+        GameObject playerTemp = PhotonNetwork.Instantiate("PlayerArmature", Vector3.one, Quaternion.identity, 0);
     }
 }

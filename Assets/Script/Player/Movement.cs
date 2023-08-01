@@ -5,8 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Movement : MonoBehaviourPunCallbacks
 {
+
     private CanvasManager canvas;
 
     private CharacterController controller;
@@ -33,12 +34,13 @@ public class Movement : MonoBehaviour
     
     // 메인 카메라가 1번 카메라로 설정되었는지 : 1번 카메라(virtualCamera), 2번 카메라(secondCamera) 
     public bool isMainCamera;
-    
 
+    
     void Start()
     {
-        canvas = GameObject.Find("CanvasManager").GetComponent<CanvasManager>();
 
+        canvas = GameObject.Find("CanvasManager").GetComponent<CanvasManager>();
+        
         controller = GetComponent<CharacterController>();
         transform = GetComponent<Transform>();
         animator = controller.GetComponent<Animator>();
@@ -64,6 +66,7 @@ public class Movement : MonoBehaviour
     
     void Update()
     {
+      
         CreateSometing();
         ChangeCamera();
     }
@@ -117,4 +120,6 @@ public class Movement : MonoBehaviour
             inputZTime = maxZtime;
         }
     }
+
+   
 }

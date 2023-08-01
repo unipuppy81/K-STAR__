@@ -44,6 +44,9 @@ MonoBehaviour:
   - Jump
   - DropObjectRPC
   - PickUpObjectRPC
+  - EnterObjectRPC
+  - ExitObjectRPC
+  - SetOccupied
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

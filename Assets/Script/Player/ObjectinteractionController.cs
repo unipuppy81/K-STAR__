@@ -9,7 +9,7 @@ public class ObjectinteractionController : MonoBehaviourPunCallbacks
     private bool isHoldingObject = false; // 물체를 들고 있는지 여부를 나타내는 변수
     private GameObject heldObject = null; // 들고 있는 물체를 저장하는 변수
 
-    private float interactionRange = 5f; // 상호작용 가능한 거리
+    private float interactionRange = 1f; // 상호작용 가능한 거리
 
     void Update()
     {

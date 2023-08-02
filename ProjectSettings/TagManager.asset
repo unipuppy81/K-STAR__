@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - JumpPad
   - Pickable
+  - InteractableObject
   layers:
   - Default
   - TransparentFX

@@ -2,47 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-public class Seesaw : MonoBehaviourPunCallbacks
+public class Seesaw : MonoBehaviourPunCallbacks , IPunObservable
 {
-    private Rigidbody rigidBody;
-    private float swingForce = 5f;
+    private Vector3 latestPosition;
+    private Quaternion latestRotation;
+    private GameObject swingObject;
+
     private void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        // 동기화할 빈 GameObject 생성
+        swingObject = new GameObject("SeesawObject");
+        swingObject.transform.SetParent(transform);
+
+        // 빈 GameObject에 포톤 뷰 추가
+        PhotonView photonView = swingObject.AddComponent<PhotonView>();
+        photonView.ViewID = PhotonNetwork.AllocateViewID();
     }
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (!photonView.IsMine)
         {
-            // 로컬 플레이어의 경우 키보드 입력을 사용하여 시소를 제어합니다.
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-
-            Vector3 swingDirection = new Vector3(horizontalInput, 0f, verticalInput);
-            rigidBody.AddForce(swingDirection * swingForce);
-
-            // 시소가 너무 빨리 회전하지 않도록 회전 각도를 제한합니다.
-            float maxRotationAngle = 45f;
-            float currentRotationAngle = Mathf.Clamp(transform.rotation.eulerAngles.z, -maxRotationAngle, maxRotationAngle);
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, currentRotationAngle);
+            // 동기화된 위치와 회전을 물체에 적용
+            transform.position = Vector3.Lerp(transform.position, latestPosition, Time.deltaTime * 10);
+            transform.rotation = Quaternion.Lerp(transform.rotation, latestRotation, Time.deltaTime * 10);
         }
     }
 
-    // 다른 플레이어들에게 시소의 상태를 동기화하는 메서드
-    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            // 로컬 플레이어의 시소 상태를 보냅니다.
+            // 로컬 플레이어의 데이터를 보냅니다.
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
         }
         else
         {
-            // 원격 플레이어의 시소 상태를 받아 적용합니다.
-            transform.position = (Vector3)stream.ReceiveNext();
-            transform.rotation = (Quaternion)stream.ReceiveNext();
+            // 다른 플레이어의 데이터를 수신합니다.
+            latestPosition = (Vector3)stream.ReceiveNext();
+            latestRotation = (Quaternion)stream.ReceiveNext();
         }
     }
 }

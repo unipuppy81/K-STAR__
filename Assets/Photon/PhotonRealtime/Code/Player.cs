@@ -137,6 +137,7 @@ namespace Photon.Realtime
         /// <summary>Can be used to store a reference that's useful to know "by player".</summary>
         /// <remarks>Example: Set a player's character as Tag by assigning the GameObject on Instantiate.</remarks>
         public object TagObject;
+        public object transform;
 
 
         /// <summary>

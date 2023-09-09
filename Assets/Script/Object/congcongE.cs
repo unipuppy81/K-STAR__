@@ -6,8 +6,38 @@ public class congcongE : MonoBehaviour
 {
 
 
+    static
+    PlayetrCTL PlayetrCTLInstance = new PlayetrCTL();
+    float jumpP = PlayetrCTLInstance.jumpPower;
 
-    PlayetrCTL p
+    bool isJumpZone = false;
+    Rigidbody rb;
+
+    public void SetjumpPower()
+    {
+        jumpP = 30f;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name=="congcongE")
+        {
+            isJumpZone = true;
+        }
+    }
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+    private void Update()
+    {
+        if (isJumpZone)
+        {
+            SetjumpPower();
+            isJumpZone = false;
+        }
+    }
+
     //[SerializeField]
     //private float jumpForce = 400f;
     //[SerializeField]

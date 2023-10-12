@@ -11,6 +11,8 @@ TagManager:
   - JumpPad
   - Pickable
   - InteractableObject
+  - Ground
+  - congconge
   layers:
   - Default
   - TransparentFX

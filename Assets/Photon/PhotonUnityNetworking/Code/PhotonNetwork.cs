@@ -3307,7 +3307,12 @@ namespace Photon.Pun
             }
         }
 
-        #endif
+        public static int AllocateViewID()
+        {
+            throw new NotImplementedException();
+        }
+
+#endif
 
     }
 }

@@ -46,13 +46,16 @@ public class PlayetrCTL : MonoBehaviour
         r = Input.GetAxis("Mouse X");
 
         Debug.DrawRay(transform.position, -transform.up * 0.6f, Color.green);
-        if(Input.GetKeyDown("space"))
+        /*if(Input.GetKeyDown("space"))
         {
-            if(Physics.Raycast(transform.position,-transform.up,out hit, 0.6f))
+            //if(Physics.Raycast(transform.position,-transform.up,out hit, 1.0f)) // 0.6f에서 1.0f로 변경
+            Debug.Log("스페이스바 출력");
+            if (Physics.Raycast(transform.position,-transform.up,out hit, 1.0f))
             {
+                Debug.Log("레이케스트 점프");
                 rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             }
-        }
+        }*/
     }
 
     void FixedUpdate()

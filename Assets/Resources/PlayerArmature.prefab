@@ -1139,7 +1139,7 @@ MonoBehaviour:
   FootstepAudioVolume: 0.3
   JumpHeight: 1.2
   Gravity: -15
-  JumpTimeout: 0.3
+  JumpTimeout: 0
   FallTimeout: 0.15
   Grounded: 1
   GroundedOffset: -0.14
@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
-  jump: 0
+  jump: 1
   sprint: 0
   analogMovement: 0
   cursorLocked: 1
@@ -1341,6 +1341,7 @@ MonoBehaviour:
   virtualCamera: {fileID: 0}
   secondCamera: {fileID: 0}
   bulletSpace: {fileID: 7682965401442267907}
+  playerplace: {x: 0, y: 0, z: 0}
   isMainCamera: 0
 --- !u!114 &3710639995676825338
 MonoBehaviour:

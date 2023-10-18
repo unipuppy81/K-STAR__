@@ -1498,6 +1498,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: seesaw
       objectReference: {fileID: 0}
+    - target: {fileID: 2062237580698070414, guid: e2dec572cde53a649b8f67d8f80bde46, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2062237580698070515, guid: e2dec572cde53a649b8f67d8f80bde46, type: 3}
       propertyPath: m_RootOrder
       value: 18

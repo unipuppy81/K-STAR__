@@ -47,6 +47,10 @@ MonoBehaviour:
   - EnterObjectRPC
   - ExitObjectRPC
   - SetOccupied
+  - EnterRide
+  - ExitRide
+  - RPC_ExitRide
+  - RPC_TryToRide
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

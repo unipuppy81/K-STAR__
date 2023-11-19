@@ -1,0 +1,1 @@
+HDRI Texture is taken from https://hdrihaven.com/ and licensed under CC0 license (https://hdrihaven.com/p/license.php).

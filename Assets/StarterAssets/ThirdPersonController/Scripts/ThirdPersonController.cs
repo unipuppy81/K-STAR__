@@ -87,6 +87,10 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
+        public int jumpCount = 0;
+        public int maxJumpCount = 2;
+        public bool canDoubleJump;
+
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
@@ -150,6 +154,7 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            canDoubleJump = false;
         }
 
         private void Update()
@@ -351,6 +356,8 @@ namespace StarterAssets
         {
             if (Grounded)
             {
+                canDoubleJump = true;
+                jumpCount = 0;
                 // jump timeout
                 if (_jumpTimeoutDelta >= 0.0f)
                 {
@@ -374,9 +381,10 @@ namespace StarterAssets
                 }
 
                 // Jump
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                if (_input.jump && _jumpTimeoutDelta <= 0.0f && jumpCount < maxJumpCount) 
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    jumpCount++;
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
                     // update animator if using character
@@ -388,6 +396,16 @@ namespace StarterAssets
             }
             else
             {
+                if(_input.jump && _jumpTimeoutDelta <= 0.0f && jumpCount < maxJumpCount)
+                {
+                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    jumpCount++;
+                    // update animator if using character
+                    if (_hasAnimator)
+                    {
+                        _animator.SetBool(_animIDJump, true);
+                    }
+                }
                 // reset the jump timeout timer
                 _jumpTimeoutDelta = JumpTimeout;
 

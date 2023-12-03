@@ -53,22 +53,11 @@ MonoBehaviour:
   - RPC_TryToRide
   - RPC_SetExiting
   - RPC_SetRiding
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-  - SyncJump
-  - LaunchPlayer
-=======
->>>>>>> Stashed changes
   - InteractWithObject
   - MoveObject
   - RequestEnterVehicle
   - StartInteraction
   - StopObject
-<<<<<<< Updated upstream
-=======
->>>>>>> f1c37601c4088158f14ebe6fc51219b8cca4c18e
->>>>>>> Stashed changes
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

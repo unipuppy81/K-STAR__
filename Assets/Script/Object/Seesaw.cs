@@ -4,6 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 public class Seesaw : MonoBehaviourPunCallbacks , IPunObservable
 {
+
+    //seesawobject라는 빈 오브젝트에 포톤 뷰 추가하기
     private Vector3 latestPosition;
     private Quaternion latestRotation;
     private GameObject swingObject;

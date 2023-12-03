@@ -12,6 +12,7 @@ TagManager:
   - Pickable
   - InteractableObject
   - Ground
+  - congconge
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - Ground
   - 
   - 
   - 

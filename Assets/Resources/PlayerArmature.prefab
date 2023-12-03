@@ -1141,19 +1141,22 @@ MonoBehaviour:
   FootstepAudioVolume: 0.3
   JumpHeight: 1.2
   Gravity: -15
-  JumpTimeout: 0.3
+  JumpTimeout: 0
   FallTimeout: 0.15
   Grounded: 1
   GroundedOffset: -0.14
   GroundedRadius: 0.28
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 640
   CinemachineCameraTarget: {fileID: 8338988566280778634}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  jumpCount: 0
+  maxJumpCount: 2
+  canDoubleJump: 0
 --- !u!114 &5885216827943657505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,7 +1188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
-  jump: 0
+  jump: 1
   sprint: 0
   analogMovement: 0
   cursorLocked: 1
@@ -1343,6 +1346,7 @@ MonoBehaviour:
   virtualCamera: {fileID: 0}
   secondCamera: {fileID: 0}
   bulletSpace: {fileID: 7682965401442267907}
+  playerplace: {x: 0, y: 0, z: 0}
   isMainCamera: 0
 --- !u!114 &3710639995676825338
 MonoBehaviour:

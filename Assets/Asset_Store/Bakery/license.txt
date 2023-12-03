@@ -1,0 +1,6 @@
+This asset is governed by the Asset Store EULA; however, the following components are governed by the licenses indicated below:
+A. lauter_waterfall_2k.exr - HDRI texture used for environmental lightning on asset showcase scene
+	This texture is provided by https://hdrihaven.com/ and licensed under Creative Commonse 0 license https://hdrihaven.com/p/license.php
+	- You can use the HDRIs for any purpose, including commercial work.
+    - You do not need to give credit or attribution when using them (although it is appreciated).
+    - You can redistribute them, share them around, include them when sharing your own work, or in a product you sell.

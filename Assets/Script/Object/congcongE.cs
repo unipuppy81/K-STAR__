@@ -4,38 +4,67 @@ using UnityEngine;
 
 public class congcongE : MonoBehaviour
 {
-    [SerializeField]
-    private float jumpForce = 400f;
-    [SerializeField]
-    private float speed = 1f;
-    [SerializeField]
-    private float jumpZoneForce = 2f;
 
-    bool isJumpZone = false;
-    Rigidbody rb;
+    //[SerializeField]
+    //private float jumpO = 5.0f;
+    //private float JumpPowerUp = 10.0f;
+    //private Rigidbody rb;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.name=="congcongE")
-        {
-            isJumpZone = true;
-        }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
+    //static
+    //PlayetrCTL PlayetrCTLInstance = new PlayetrCTL();
+    //float jumpP = PlayetrCTLInstance.jumpPower;
+    //private void Start()
+    //{
+    //    rb = GetComponent<Rigidbody>();
+    //}
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        JumpUp(jumpP);
+    //    }
+    //}
 
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject.name ==("congconge"))
+    //    {
+    //        JumpUp(JumpPowerUp);
+    //    }
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
-       if(isJumpZone)
-        {
-            rb.AddForce(new Vector3(0, jumpZoneForce, 0)*jumpForce);
-            isJumpZone = false;
-        }
-       
-    }
+    //private void JumpUp(float force)
+    //{
+    //    rb.AddForce(Vector3.up * force, ForceMode.Impulse);
+    //}
+    //static
+    //PlayetrCTL PlayetrCTLInstance = new PlayetrCTL();
+    //float jumpP = PlayetrCTLInstance.jumpPower;
+
+    //bool isJumpZone = true;
+    //Rigidbody rb;
+
+    ////public void SetjumpPower()
+    ////{
+    ////    jumpP = 30f;
+    ////}
+
+    //private void Start()
+    //{
+    //    rb = GetComponent<Rigidbody>();
+    //}
+    //private void Update()
+    //{
+    //    //JumpUp();
+    //}
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject.name=="congcongE")
+    //    {
+    //        JumpUp();
+    //        isJumpZone = false;
+    //    }
+    //}
+
+
 }

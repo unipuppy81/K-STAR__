@@ -1,8 +1,10 @@
 using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Movement : MonoBehaviourPunCallbacks
@@ -27,6 +29,7 @@ public class Movement : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject bulletSpace;
 
+    public Vector3 playerplace;         // 발사체의 위치 조정위한 변수
 
     //  Z 중복 입력 안되게 딜레이 주는 변수
     private float inputZTime;
@@ -63,7 +66,7 @@ public class Movement : MonoBehaviourPunCallbacks
         }
     }
 
-    
+
     void Update()
     {
       
@@ -79,13 +82,13 @@ public class Movement : MonoBehaviourPunCallbacks
         }
         if (Input.GetMouseButtonDown(0) && pv.IsMine)
         {
-            PhotonNetwork.Instantiate("SlotCar_A", Camera.main.transform.position, Camera.main.transform.rotation, 0);
+            PhotonNetwork.Instantiate("Bullet", Camera.main.transform.position+playerplace, Camera.main.transform.rotation, 0);
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             //닿은 곳의 정보
             RaycastHit hitInfo;
             //바라본다
             //Raycast는 기본적으로 bool형을 반환하게 된다. 그런데 인자 값에 out형으로 인자하나를 더 반환하게 된다.
-            if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 30.0f))
+            if (Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, 50.0f))
             {
                 //닿았다 (Raycast가 true일때)
                 if (hitInfo.transform.gameObject.tag == "Object")

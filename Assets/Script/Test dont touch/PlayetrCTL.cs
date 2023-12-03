@@ -12,10 +12,11 @@ public class PlayetrCTL : MonoBehaviour
     private float h;
     private float r;
 
-    [Header("ÀÌµ¿ ¹× È¸Àü¼Óµµ")]
+    [Header("ï¿½Ìµï¿½ ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Óµï¿½")]
     public float moveSpeed = 8.0f;
     public float turnSpeed = 0.0f;
     public float jumpPower = 5.0f;
+    public float jumpPower2 = 30.0f;
 
     private float turnSpeedValue = 200.0f;
 
@@ -46,13 +47,22 @@ public class PlayetrCTL : MonoBehaviour
         r = Input.GetAxis("Mouse X");
 
         Debug.DrawRay(transform.position, -transform.up * 0.6f, Color.green);
-        if(Input.GetKeyDown("space"))
+        /*if(Input.GetKeyDown("space"))
         {
-            if(Physics.Raycast(transform.position,-transform.up,out hit, 0.6f))
+<<<<<<< HEAD
+            //if(Physics.Raycast(transform.position,-transform.up,out hit, 1.0f)) // 0.6f¿¡¼­ 1.0f·Î º¯°æ
+            Debug.Log("½ºÆäÀÌ½º¹Ù Ãâ·Â");
+            if (Physics.Raycast(transform.position,-transform.up,out hit, 1.0f))
+=======
+            Debug.Log("ì í”„ ì™„ ");
+            if (Physics.Raycast(transform.position,-transform.up,out hit, 0.6f))
+>>>>>>> 660834ebeb5793ca225e037d8e1ea45575c09078
             {
+                Debug.Log("·¹ÀÌÄÉ½ºÆ® Á¡ÇÁ");
                 rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+                   
             }
-        }
+        }*/
     }
 
     void FixedUpdate()
@@ -60,5 +70,13 @@ public class PlayetrCTL : MonoBehaviour
         Vector3 dir = (Vector3.forward * v) + (Vector3.right * h);
         transform.Translate(dir.normalized * Time.deltaTime * moveSpeed, Space.Self);
         transform.Rotate(Vector3.up * Time.smoothDeltaTime * turnSpeed * r);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name==("congconge"))
+        {
+            rigidbody.AddForce(Vector3.up * jumpPower2, ForceMode.Impulse);
+        }
     }
 }

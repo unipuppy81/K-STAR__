@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviourPunCallbacks
 {
+    Animator anim;
+
 
     private CanvasManager canvas;
 
@@ -41,6 +43,7 @@ public class Movement : MonoBehaviourPunCallbacks
     
     void Start()
     {
+        anim = GetComponent<Animator>();
 
         canvas = GameObject.Find("CanvasManager").GetComponent<CanvasManager>();
         
@@ -69,7 +72,6 @@ public class Movement : MonoBehaviourPunCallbacks
 
     void Update()
     {
-      
         CreateSometing();
         ChangeCamera();
     }

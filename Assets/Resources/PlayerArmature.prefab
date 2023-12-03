@@ -1043,9 +1043,7 @@ GameObject:
   - component: {fileID: 3710639995676825338}
   - component: {fileID: 7848738530862803052}
   - component: {fileID: -6081062226961924240}
-  - component: {fileID: 6204523122879597449}
   - component: {fileID: 6158417198147927619}
-  - component: {fileID: -8193667524973483183}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -1307,8 +1305,8 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
+  OwnershipTransfer: 1
+  observableSearch: 0
   ObservedComponents:
   - {fileID: -8116639842573179252}
   - {fileID: 3710639995676825338}
@@ -1409,18 +1407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf41d31e8adab747a09e5a565055cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6204523122879597449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926081852918481}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cdcf0b742095e84cb8bded82e420a1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &6158417198147927619
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1434,22 +1420,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-8193667524973483183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926081852918481}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ad212cddb725c74f928212b3e02c733, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  turnSpeed: 2
-  jumpPower: 5
-  jumpPower2: 30
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0

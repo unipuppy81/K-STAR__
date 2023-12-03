@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-public class Cart : MonoBehaviourPunCallbacks
+public class Cart : MonoBehaviourPunCallbacks , IPunObservable
 {
-    public Transform targetPosition; // 이동할 목표 지점
+    public Transform targetPositionOnTop; // 탑승할 때 이동할 목표 지점(카트 이동 목표 지점)
+    public Transform targetPositionBeside; // 하차할 때 이동할 목표 지점(하차시 플레이어 위치)
     private float moveSpeed = 5.0f;
-    private float stoppingDistance = 0.1f; // 멈추기 위한 최소 거리
+    private float stoppingDistance = 1.0f; // 목표 지점에 도달할 때의 거리
     private bool isRiding = false; // 탑승 상태 여부
     private GameObject passenger; // 탑승한 플레이어
 
@@ -29,7 +30,7 @@ public class Cart : MonoBehaviourPunCallbacks
 
             if (isRiding)
             {
-                Move();
+                MoveObject();
             }
         }
     }
@@ -59,13 +60,11 @@ public class Cart : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_TryToRide(PhotonMessageInfo info)
     {
-        // 탑승 로직을 MasterClient에서 실행
         if (!isRiding)
         {
             isRiding = true;
             photonView.TransferOwnership(info.Sender);
 
-            // 클라이언트들에게 탑승 상태 전달
             photonView.RPC("RPC_SetRiding", RpcTarget.All);
         }
     }
@@ -81,54 +80,65 @@ public class Cart : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_ExitRide()
     {
-        // 하차 로직을 MasterClient에서 실행
         isRiding = false;
 
         if (passenger != null)
         {
-            // 플레이어의 부모를 초기화
+            // 플레이어가 탑승할 때 위치 이동
             passenger.transform.parent = null;
+            if (targetPositionBeside != null)
+            {
+                passenger.transform.position = targetPositionBeside.position;
+            }
             passenger = null;
         }
 
-        photonView.TransferOwnership(0); // 오브젝트 소유권을 다시 초기화
+        photonView.TransferOwnership(0);
 
-        // 클라이언트들에게 하차 상태 전달
         photonView.RPC("RPC_SetExiting", RpcTarget.All);
     }
 
     [PunRPC]
     private void RPC_SetRiding()
     {
-        // 탑승 상태를 설정
         if (passenger != null)
         {
-            // 플레이어를 오브젝트의 자식으로 설정
+            // 플레이어가 탑승할 때 위치 이동
             passenger.transform.parent = transform;
+            if (targetPositionOnTop != null)
+            {
+                // 플레이어를 오브젝트 위로 이동
+                passenger.transform.localPosition = Vector3.zero;
+            }
         }
     }
 
     [PunRPC]
     private void RPC_SetExiting()
     {
-        // 하차 상태를 설정
         if (passenger != null)
         {
-            // 플레이어의 부모를 초기화
+            // 플레이어가 하차할 때 위치 이동
             passenger.transform.parent = null;
+            if (targetPositionBeside != null)
+            {
+                passenger.transform.position = targetPositionBeside.position;
+            }
         }
     }
 
-    private void Move()
+    private void MoveObject()
     {
-        // 목표 지점까지의 거리 계산
-        float distanceToTarget = Vector3.Distance(transform.position, targetPosition.position);
-
-        // 일정 거리 이상이면 이동
-        if (distanceToTarget > stoppingDistance)
+        // 두 플레이어가 모두 탑승한 경우에만 이동
+        if (isRiding && passenger != null && photonView.OwnershipTransfer == OwnershipOption.Takeover)
         {
-            // 정해진 속도로 이동
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            float distanceToTarget = Vector3.Distance(transform.position, targetPositionOnTop.position);
+
+            if (distanceToTarget > stoppingDistance)
+            {
+                // 정해진 속도로 이동
+                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -147,4 +157,22 @@ public class Cart : MonoBehaviourPunCallbacks
             passenger = null;
         }
     }
+
+    #region IPunObservable Implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // 데이터를 다른 플레이어에게 보내기
+            stream.SendNext(isRiding);
+        }
+        else
+        {
+            // 다른 플레이어로부터 데이터 받기
+            isRiding = (bool)stream.ReceiveNext();
+        }
+    }
+
+    #endregion
 }

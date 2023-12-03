@@ -5,78 +5,41 @@ using Photon.Pun;
 //카트타기위한 스크립트
 public class PlayerInteraction : MonoBehaviourPunCallbacks
 {
-    private Cart currentRideable; // 현재 탑승 중인 오브젝트
+    public Transform targetDestination;
+    private bool isMoving = false;
 
     void Update()
     {
-        if (photonView.IsMine)
+        if (isMoving)
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                if (currentRideable != null)
-                {
-                    ExitRide();
-                }
-                else
-                {
-                    TryToRide();
-                }
-            }
-        }
-    }
+            // 오브젝트가 이동 중일 때 동기화
+            photonView.RPC("MoveObject", RpcTarget.AllBuffered, targetDestination.position);
 
-    private void TryToRide()
-    {
-        if (currentRideable == null)
-        {
-            // 레이캐스트를 사용하여 탑승 가능한 오브젝트를 찾습니다.
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 2.0f))
+            // 일정 좌표에 도달하면 이동 중지
+            if (Vector3.Distance(transform.position, targetDestination.position) < 0.1f)
             {
-                Cart rideable = hit.collider.GetComponent<Cart>();
-                if (rideable != null)
-                {
-                    photonView.RPC("RPC_TryToRide", RpcTarget.MasterClient, rideable.photonView.ViewID);
-                }
+                photonView.RPC("StopObject", RpcTarget.AllBuffered);
             }
         }
     }
 
     [PunRPC]
-    private void RPC_TryToRide(int rideableID, PhotonMessageInfo info)
+    void MoveObject(Vector3 destination)
     {
-        if (currentRideable == null)
-        {
-            PhotonView rideableView = PhotonView.Find(rideableID);
-            if (rideableView != null)
-            {
-                Cart rideable = rideableView.GetComponent<Cart>();
-                if (rideable != null)
-                {
-                    currentRideable = rideable;
-                    currentRideable.photonView.TransferOwnership(info.Sender);
-                    currentRideable.photonView.RPC("RPC_TryToRide", RpcTarget.AllBuffered);
-                }
-            }
-        }
-    }
-
-    private void ExitRide()
-    {
-        if (currentRideable != null)
-        {
-            photonView.RPC("RPC_ExitRide", RpcTarget.MasterClient);
-        }
+        // RPC를 통해 모든 플레이어가 목표 지점까지 이동한 오브젝트를 동기화
+        transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * 5f);
     }
 
     [PunRPC]
-    private void RPC_ExitRide(PhotonMessageInfo info)
+    void StopObject()
     {
-        if (currentRideable != null)
-        {
-            currentRideable.photonView.TransferOwnership(0);
-            currentRideable.photonView.RPC("RPC_ExitRide", RpcTarget.AllBuffered);
-            currentRideable = null;
-        }
+        // RPC를 통해 모든 플레이어가 오브젝트의 이동을 중지
+        isMoving = false;
+    }
+
+    public void StartMoving()
+    {
+        // 다른 스크립트에서 이 메서드를 호출하여 오브젝트의 이동을 시작
+        isMoving = true;
     }
 }

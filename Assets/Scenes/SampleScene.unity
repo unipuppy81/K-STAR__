@@ -1219,7 +1219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159865422}
   m_LocalRotation: {x: -0, y: 0.20786995, z: -0, w: 0.9781565}
-  m_LocalPosition: {x: 3.5477648, y: 0.10378075, z: 42.829803}
+  m_LocalPosition: {x: 5.42, y: 0, z: 15.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1516,7 +1516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1486440780
 Transform:
   m_ObjectHideFlags: 0
@@ -1551,6 +1551,7 @@ GameObject:
   - component: {fileID: 1490427989}
   - component: {fileID: 1490427988}
   - component: {fileID: 1490427987}
+  - component: {fileID: 1490427992}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1645,13 +1646,35 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490427986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: -1.98, z: 10}
+  m_LocalPosition: {x: 7.992, y: -1.98, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1490427992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490427986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 8
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &1555324110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2415,9 +2438,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2595338340839252077, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595338340839252077, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: targetDestination
+      value: 
+      objectReference: {fileID: 1490427991}
     - target: {fileID: 4278726573564002382, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
       propertyPath: m_Constraints
       value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278726573564002382, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278726573564002382, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4656056368061552180, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
       propertyPath: sceneViewId
@@ -2427,6 +2466,18 @@ PrefabInstance:
       propertyPath: observableSearch
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4656056368061552180, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: OwnershipTransfer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291743543060725349, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: targetPosition
+      value: 
+      objectReference: {fileID: 1490427991}
+    - target: {fileID: 6291743543060725349, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: targetDestination
+      value: 
+      objectReference: {fileID: 1490427991}
     - target: {fileID: 6291743543060725349, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
       propertyPath: waypoints.Array.data[0]
       value: 
@@ -2451,6 +2502,10 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[5]
       value: 
       objectReference: {fileID: 1070029937}
+    - target: {fileID: 6606186401475478502, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7287912555701417543, guid: 7328a0cee0c6ab845bd102aa0602a834, type: 3}
       propertyPath: m_RootOrder
       value: 11

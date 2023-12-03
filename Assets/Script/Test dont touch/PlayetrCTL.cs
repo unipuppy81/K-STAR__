@@ -54,7 +54,7 @@ public class PlayetrCTL : MonoBehaviour
             Debug.Log("½ºÆäÀÌ½º¹Ù Ãâ·Â");
             if (Physics.Raycast(transform.position,-transform.up,out hit, 1.0f))
 =======
-            Debug.Log("ì í”„ ì™„ ");
+            Debug.Log("?í”„ ??");
             if (Physics.Raycast(transform.position,-transform.up,out hit, 0.6f))
 >>>>>>> 660834ebeb5793ca225e037d8e1ea45575c09078
             {

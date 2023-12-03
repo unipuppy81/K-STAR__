@@ -1449,6 +1449,7 @@ MonoBehaviour:
   moveSpeed: 5
   turnSpeed: 2
   jumpPower: 5
+  jumpPower2: 30
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0

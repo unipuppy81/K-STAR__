@@ -11,7 +11,7 @@ public class PlayerInteraction : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 if (currentRideable != null)
                 {

@@ -51,6 +51,8 @@ MonoBehaviour:
   - ExitRide
   - RPC_ExitRide
   - RPC_TryToRide
+  - RPC_SetExiting
+  - RPC_SetRiding
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

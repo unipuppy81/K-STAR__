@@ -2,23 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-public class Cart : MonoBehaviourPun
+using Photon.Realtime;
+public class Cart : MonoBehaviourPunCallbacks
 {
-    public Transform[] waypoints;
-    private int currentWaypointIndex = 0;
+    public Transform targetPosition; // 이동할 목표 지점
     private float moveSpeed = 5.0f;
-    private float distanceThreshold = 0.1f;
+    private float stoppingDistance = 0.1f; // 멈추기 위한 최소 거리
     private bool isRiding = false; // 탑승 상태 여부
+    private GameObject passenger; // 탑승한 플레이어
+
     void Update()
     {
-        if (!photonView.IsMine)
-        {
-            return; // 다른 플레이어의 오브젝트에 대한 업데이트를 무시합니다.
-        }
-
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && CanBoard())
             {
                 if (isRiding)
                 {
@@ -32,16 +29,30 @@ public class Cart : MonoBehaviourPun
 
             if (isRiding)
             {
-                MoveAlongPath();
+                Move();
             }
         }
     }
 
+    private bool CanBoard()
+    {
+        // 플레이어와 오브젝트 간의 거리가 일정 범위 내에 있는지 확인
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3.0f);
+        foreach (var collider in colliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void TryToRide()
     {
-        if (!isRiding)
+        if (!isRiding && CanBoard())
         {
-            photonView.RPC("RPC_TryToRide", RpcTarget.MasterClient);
+            photonView.RPC("RPC_TryToRide", RpcTarget.All);
         }
     }
 
@@ -49,11 +60,13 @@ public class Cart : MonoBehaviourPun
     private void RPC_TryToRide(PhotonMessageInfo info)
     {
         // 탑승 로직을 MasterClient에서 실행
-        // 예를 들어, 탑승 가능한지 여부를 확인하고 탑승하도록 설정
         if (!isRiding)
         {
             isRiding = true;
             photonView.TransferOwnership(info.Sender);
+
+            // 클라이언트들에게 탑승 상태 전달
+            photonView.RPC("RPC_SetRiding", RpcTarget.All);
         }
     }
 
@@ -61,7 +74,7 @@ public class Cart : MonoBehaviourPun
     {
         if (isRiding)
         {
-            photonView.RPC("RPC_ExitRide", RpcTarget.MasterClient);
+            photonView.RPC("RPC_ExitRide", RpcTarget.All);
         }
     }
 
@@ -70,22 +83,68 @@ public class Cart : MonoBehaviourPun
     {
         // 하차 로직을 MasterClient에서 실행
         isRiding = false;
-        photonView.TransferOwnership(0); // 오브젝트 소유권을 다시 초기화
-    }
 
-    private void MoveAlongPath()
-    {
-        // 경로를 따라 이동
-        Vector3 currentWaypoint = waypoints[currentWaypointIndex].position;
-        if (Vector3.Distance(transform.position, currentWaypoint) < distanceThreshold)
+        if (passenger != null)
         {
-            currentWaypointIndex++;
-            if (currentWaypointIndex >= waypoints.Length)
-            {
-                currentWaypointIndex = 0;
-            }
+            // 플레이어의 부모를 초기화
+            passenger.transform.parent = null;
+            passenger = null;
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed * Time.deltaTime);
+        photonView.TransferOwnership(0); // 오브젝트 소유권을 다시 초기화
+
+        // 클라이언트들에게 하차 상태 전달
+        photonView.RPC("RPC_SetExiting", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPC_SetRiding()
+    {
+        // 탑승 상태를 설정
+        if (passenger != null)
+        {
+            // 플레이어를 오브젝트의 자식으로 설정
+            passenger.transform.parent = transform;
+        }
+    }
+
+    [PunRPC]
+    private void RPC_SetExiting()
+    {
+        // 하차 상태를 설정
+        if (passenger != null)
+        {
+            // 플레이어의 부모를 초기화
+            passenger.transform.parent = null;
+        }
+    }
+
+    private void Move()
+    {
+        // 목표 지점까지의 거리 계산
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition.position);
+
+        // 일정 거리 이상이면 이동
+        if (distanceToTarget > stoppingDistance)
+        {
+            // 정해진 속도로 이동
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            passenger = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            passenger = null;
+        }
     }
 }

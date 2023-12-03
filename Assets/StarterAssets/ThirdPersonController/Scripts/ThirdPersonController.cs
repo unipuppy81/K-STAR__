@@ -1,4 +1,5 @@
-﻿ using UnityEngine;
+﻿using Photon.Pun.Demo.Cockpit;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -114,6 +115,8 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+
+        public bool isCongE;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -155,15 +158,17 @@ namespace StarterAssets
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
             canDoubleJump = false;
+            isCongE = false;
         }
 
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
-
+            JumpAndGravity2(); 
             JumpAndGravity();
             GroundedCheck();
             Move();
+
         }
 
         private void LateUpdate()
@@ -433,7 +438,46 @@ namespace StarterAssets
                 _verticalVelocity += Gravity * Time.deltaTime;
             }
         }
+        private void JumpAndGravity2()
+        {
+            if (isCongE)
+            {
+                // update animator if using character
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDJump, false);
+                    _animator.SetBool(_animIDFreeFall, false);
+                }
 
+                // stop our velocity dropping infinitely when grounded
+                if (_verticalVelocity < 0.0f)
+                {
+                    _verticalVelocity = -2f;
+                }
+
+                // Jump
+   
+                    // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    jumpCount++;
+                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+                    // update animator if using character
+                    if (_hasAnimator)
+                    {
+                        _animator.SetBool(_animIDJump, true);
+                    }
+ 
+                isCongE = false;
+                Debug.Log("conge");
+            }
+
+
+            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+            if (_verticalVelocity < _terminalVelocity)
+            {
+                _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
@@ -473,6 +517,15 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+
+        void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if(hit.collider.tag == "congconge")
+            {
+                isCongE = true;
             }
         }
     }

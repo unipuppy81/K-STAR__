@@ -361,6 +361,7 @@ namespace StarterAssets
         {
             if (Grounded)
             {
+                isCongE = false;
                 canDoubleJump = true;
                 jumpCount = 0;
                 // jump timeout
@@ -468,7 +469,6 @@ namespace StarterAssets
                     }
  
                 isCongE = false;
-                Debug.Log("conge");
             }
 
 

@@ -8,7 +8,7 @@ public class RopeManager : MonoBehaviourPunCallbacks
     public SpringJoint ropeJoint;
     public Transform connectedPlayer;
 
-    void Start()
+    void Awake()
     {
         // 플레이어 1이나 2에 따라 다른 초기 위치 설정
         if (photonView.IsMine)

@@ -115,7 +115,7 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
-
+        private bool _canDoubleJump = true;
         public bool isCongE;
         private bool IsCurrentDeviceMouse
         {
@@ -128,6 +128,14 @@ namespace StarterAssets
 #endif
             }
         }
+
+        [Header("Dash")]
+        public float dashSpeed = 15f;
+        public float dashDuration = 0.5f;
+        public float dashCooldown = 2.0f;
+
+        private float dashTimer;
+        private float dashCooldownTimer;
 
 
         private void Awake()
@@ -164,10 +172,13 @@ namespace StarterAssets
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
-            JumpAndGravity2(); 
-            JumpAndGravity();
+            JumpAndGravity2();
+            JumpAndGravity1();
             GroundedCheck();
             Move();
+            Dash();
+            UpdateDashTimer();
+            //if (Input.GetKeyDown(KeyCode.Space)) { jumpCount++; if (jumpCount == 2) { _canDoubleJump = false; jumpCount = 0; } }
         }
 
         private void LateUpdate()
@@ -184,12 +195,54 @@ namespace StarterAssets
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
+        void Dash()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                if (dashCooldownTimer <= 0)
+                {
+                    // 대쉬 가능한 상태일 때 대쉬 시작
+                    StartDash();
+                }
+            }
+        }
+        void StartDash()
+        {
+            // 대쉬 중일 때는 대쉬 불가능
+            if (dashTimer > 0)
+                return;
+
+            // 대쉬 타이머 초기화 및 대쉬 쿨다운 타이머 설정
+            dashTimer = dashDuration;
+            dashCooldownTimer = dashCooldown;
+
+            // 실제 대쉬 동작
+            MoveSpeed = dashSpeed;
+        }
+
+        void UpdateDashTimer()
+        {
+            // 대쉬 타이머 업데이트
+            if (dashTimer > 0)
+            {
+                dashTimer -= Time.deltaTime;
+            }
+
+            // 대쉬 쿨다운 타이머 업데이트
+            if (dashCooldownTimer > 0)
+            {
+                dashCooldownTimer -= Time.deltaTime;
+            }
+
+            if (MoveSpeed >= 3.0f) { MoveSpeed -= Time.deltaTime * 30.0f; }
+        }
+
         private void GroundedCheck()
         {
             // set sphere position, with offset
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                 transform.position.z);
-            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.UseGlobal);
 
             /*
             Collider[] colliders = Physics.OverlapSphere(spherePosition, GroundedRadius, GroundLayers);
@@ -221,6 +274,25 @@ namespace StarterAssets
             {
                 _animator.SetBool(_animIDGrounded, Grounded);
             }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            /*
+            if(collision.collider.tag == "Ground")
+            {
+                Debug.Log("충돌 COllision");
+                Grounded = true;
+            }
+            else if(collision.collider.tag == "Player")
+            {
+                Debug.Log("nothing");
+            }
+            else
+            {
+               Grounded = false;
+            }
+            */
         }
 
         private void CameraRotation()
@@ -381,7 +453,74 @@ namespace StarterAssets
             }
         }
 
+        private void JumpAndGravity1()
+        {
+            if (Grounded && _canDoubleJump)
+            {
+                // reset the fall timeout timer
+                _fallTimeoutDelta = FallTimeout;
 
+                // update animator if using character
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDJump, false);
+                    _animator.SetBool(_animIDFreeFall, false);
+                }
+
+                // stop our velocity dropping infinitely when grounded
+                if (_verticalVelocity < 0.0f)
+                {
+                    _verticalVelocity = -2f;
+                }
+
+                // Jump
+                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                {
+                    // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+                    // update animator if using character
+                    if (_hasAnimator)
+                    {
+                        _animator.SetBool(_animIDJump, true);
+                    }
+                }
+
+                // jump timeout
+                if (_jumpTimeoutDelta >= 0.0f)
+                {
+                    _jumpTimeoutDelta -= Time.deltaTime;
+                }
+            }
+            else
+            {
+                // reset the jump timeout timer
+                _jumpTimeoutDelta = JumpTimeout;
+
+                // fall timeout
+                if (_fallTimeoutDelta >= 0.0f)
+                {
+                    _fallTimeoutDelta -= Time.deltaTime;
+                }
+                else
+                {
+                    // update animator if using character
+                    if (_hasAnimator)
+                    {
+                        _animator.SetBool(_animIDFreeFall, true);
+                    }
+                }
+
+                // if we are not grounded, do not jump
+                _input.jump = false;
+            }
+
+            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+            if (_verticalVelocity < _terminalVelocity)
+            {
+                _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
 
         /*
         private void JumpAndGravity()

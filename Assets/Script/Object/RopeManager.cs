@@ -46,14 +46,18 @@ public class RopeManager : MonoBehaviourPunCallbacks
 
     void UpdateRopeRenderer()
     {
-        if (connectedPlayer)
-        {
-            // 두 플레이어 간의 거리를 계산하여 시작점과 끝점을 설정
-            Vector3 startPoint = transform.position;
-            Vector3 endPoint = connectedPlayer.position;
+        // LineRenderer에 첫 번째 점을 연결 플레이어 위치로 설정
+        ropeRenderer.SetPosition(0, transform.position);
 
-            ropeRenderer.SetPosition(0, startPoint);
-            ropeRenderer.SetPosition(1, endPoint);
+        // LineRenderer에 두 번째 점을 연결된 플레이어 위치로 설정
+        if (connectedPlayer != null)
+        {
+            ropeRenderer.SetPosition(1, connectedPlayer.position);
+        }
+        else
+        {
+            // 만약 연결된 플레이어가 없다면, 높은 위치로 설정하여 허공에 떠 있는 것처럼 보이게 함
+            ropeRenderer.SetPosition(1, new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z));
         }
     }
 

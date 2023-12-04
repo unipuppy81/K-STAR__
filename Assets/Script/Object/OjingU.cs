@@ -29,10 +29,12 @@ public class OjingU : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerOnPlatform = true;
+            //isPlayerOnPlatform = true;
 
             // Photon 네트워크를 통해 상태 동기화
             photonView.RPC("SyncPlatformState", RpcTarget.All, true);
+
+            StartCoroutine(MoveBlock());
         }
     }
 
@@ -52,7 +54,7 @@ public class OjingU : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerOnPlatform && photonView.IsMine)
+        /*if (isPlayerOnPlatform && photonView.IsMine)
         {
             elapsedTime += Time.deltaTime;
 
@@ -65,7 +67,7 @@ public class OjingU : MonoBehaviour
                 canMove = false;
                 // 1초가 지나면 canMove를 false로 설정하여 이후의 이동을 막습니다.
             }
-        }
+        }*/
     }
 
     private void MovePlatform()
@@ -74,6 +76,22 @@ public class OjingU : MonoBehaviour
 
         // Photon 네트워크를 통해 위치 동기화
         photonView.RPC("SyncPlatformPosition", RpcTarget.Others, transform.position);
+    }
+
+    private IEnumerator MoveBlock()
+    {
+        float resetDuration = 1f;
+        float timer = 0f;
+
+        while (timer < resetDuration)
+        {
+            block.transform.Translate(Vector3.up * moveAmount * Time.deltaTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        canMove = true;
+        elapsedTime = 0f;
     }
 
     private IEnumerator ResetPlatform()

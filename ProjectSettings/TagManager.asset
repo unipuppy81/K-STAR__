@@ -13,6 +13,7 @@ TagManager:
   - InteractableObject
   - Ground
   - congconge
+  - Button
   layers:
   - Default
   - TransparentFX

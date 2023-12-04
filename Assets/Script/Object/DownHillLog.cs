@@ -19,8 +19,11 @@ public class DownHillLog : MonoBehaviour
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (downSpeed - 1) * Time.deltaTime;
             Debug.Log("현재 속도: " + rb.velocity.magnitude);
+            
         }
         //y축이 0보다 크면 속도를 빠르게
+
+       
        
     }
 }

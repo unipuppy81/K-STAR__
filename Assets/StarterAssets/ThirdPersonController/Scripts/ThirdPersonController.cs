@@ -168,7 +168,6 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
-
         }
 
         private void LateUpdate()
@@ -190,8 +189,32 @@ namespace StarterAssets
             // set sphere position, with offset
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                 transform.position.z);
-            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
-                QueryTriggerInteraction.Ignore);
+            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+
+            /*
+            Collider[] colliders = Physics.OverlapSphere(spherePosition, GroundedRadius, GroundLayers);
+
+            int count = 0;
+
+            foreach(Collider c in colliders)
+            {
+                if(LayerMask.LayerToName(c.gameObject.layer) == "Ground")
+                {
+                    count++;
+                    Debug.Log("Ground 입니당");
+                }
+            }
+
+            if(count >= 1)
+            {
+                Grounded = true;
+            }
+            else
+            {
+                Grounded = false;
+            }
+            */
+
 
             // update animator if using character
             if (_hasAnimator)
@@ -289,7 +312,7 @@ namespace StarterAssets
             }
         }
 
-        /*private void JumpAndGravity()
+        private void JumpAndGravity()
         {
             if (Grounded)
             {
@@ -356,7 +379,11 @@ namespace StarterAssets
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
             }
-        }*/
+        }
+
+
+
+        /*
         private void JumpAndGravity()
         {
             if (Grounded)
@@ -439,6 +466,9 @@ namespace StarterAssets
                 _verticalVelocity += Gravity * Time.deltaTime;
             }
         }
+
+
+        */
         private void JumpAndGravity2()
         {
             if (isCongE)

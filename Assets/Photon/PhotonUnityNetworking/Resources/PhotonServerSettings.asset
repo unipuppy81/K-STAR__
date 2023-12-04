@@ -62,6 +62,9 @@ MonoBehaviour:
   - SyncPlatformState
   - SyncPlayerMovement
   - SyncRopeConnection
+  - EnterObject
+  - LeaveObject
+  - ObjectStopped
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

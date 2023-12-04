@@ -178,6 +178,7 @@ namespace StarterAssets
             Move();
             Dash();
             UpdateDashTimer();
+            LCtrl();
             //if (Input.GetKeyDown(KeyCode.Space)) { jumpCount++; if (jumpCount == 2) { _canDoubleJump = false; jumpCount = 0; } }
         }
 
@@ -195,9 +196,22 @@ namespace StarterAssets
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
-        void Dash()
+        void LCtrl()
         {
             if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                Gravity = -100f;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                Gravity = -15f;
+            }
+        }
+
+        void Dash()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 if (dashCooldownTimer <= 0)
                 {

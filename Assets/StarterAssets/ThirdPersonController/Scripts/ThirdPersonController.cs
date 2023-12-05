@@ -177,8 +177,8 @@ namespace StarterAssets
             GroundedCheck();
             Move();
             Dash();
-            UpdateDashTimer();
             LCtrl();
+            UpdateDashTimer();
             //if (Input.GetKeyDown(KeyCode.Space)) { jumpCount++; if (jumpCount == 2) { _canDoubleJump = false; jumpCount = 0; } }
         }
 
@@ -629,7 +629,7 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, false);
+                    //_animator.SetBool(_animIDJump, false);
                     _animator.SetBool(_animIDFreeFall, false);
                 }
 

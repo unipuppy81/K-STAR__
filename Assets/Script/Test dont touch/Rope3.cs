@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.InputSystem;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 
-public class Rope3 : MonoBehaviourPunCallbacks
+
+public class Rope3 : MonoBehaviour
 {
     public bool startRope;
     public float detectionRadius = 5f;
     public LayerMask playerLayer;
 
     public Transform[] startPoint; // 로프 시작 지점
-    public Transform endPoint;   // 로프 끝 지점
     public int segments = 10;    // 로프 세그먼트 수
     public float maxDistance = 5f; // 로프의 최대 길이
     public float ropeWidth = 0.1f; // 로프 너비
@@ -60,7 +58,7 @@ public class Rope3 : MonoBehaviourPunCallbacks
         // 최대 거리 제한
         if (distance > maxDistance)
         {
-            endPoint.position = startPoint[0].position + (startPoint[1].position - startPoint[0].position).normalized * maxDistance;
+            startPoint[1].position = startPoint[0].position + (startPoint[1].position - startPoint[0].position).normalized * maxDistance;
         }
 
         lineRenderer.positionCount = segments + 1;

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.InputSystem;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Rope3 : MonoBehaviour
+public class Rope3 : MonoBehaviourPunCallbacks
 {
     public bool startRope;
     public float detectionRadius = 5f;

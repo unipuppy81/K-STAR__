@@ -42,6 +42,8 @@ public class PlayerCart : MonoBehaviourPunCallbacks
     [PunRPC]
     private void EnterObject()
     {
+
+        photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
         // 플레이어와 오브젝트를 서로의 자식으로 설정
         transform.SetParent(targetObject.transform);
         transform.localPosition = Vector3.zero;

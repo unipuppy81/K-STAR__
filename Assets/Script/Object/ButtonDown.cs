@@ -8,7 +8,7 @@ public class ButtonDown : MonoBehaviour
     private PhotonView photonView;
 
     Animator animator;
-    public bool isDown = false;
+   
 
     void Start()
     {

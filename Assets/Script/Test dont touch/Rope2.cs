@@ -4,49 +4,56 @@ using UnityEngine;
 
 public class Rope2 : MonoBehaviour
 {
-    public Transform player;          // 플레이어 오브젝트
-    public Transform connectedObject;  // 연결할 오브젝트
-    public float ropeWidth = 0.1f;    // 로프 두께
-    public LayerMask obstacleLayer;   // 장애물을 감지할 레이어
+    public Transform player;
 
-    private GameObject ropeObject;    // 로프 GameObject
+    public LineRenderer rope;
+    public LayerMask collMask;
 
-    void Update()
+    public List<Vector3> ropePositions { get; set; } = new List<Vector3>();
+
+    private void Awake() => AddPosToRope(Vector3.zero);
+
+    private void Update()
     {
-        UpdateRope();
+        UpdateRopePositions();
+        LastSegmentGoToPlayerPos();
+
+        DetectCollisionEnter();
+        if (ropePositions.Count > 2) DetectCollisionExits();
     }
 
-    void UpdateRope()
+    private void DetectCollisionEnter()
     {
-        // 플레이어와 연결된 오브젝트 간의 거리 계산
-        float distance = Vector3.Distance(player.position, connectedObject.position);
-
-        // 중간 지점 계산
-        Vector3 midPoint = (player.position + connectedObject.position) / 2f;
-
-        // 로프 생성 또는 업데이트
-        if (ropeObject == null)
-        {
-            ropeObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-            ropeObject.name = "RopeCylinder";
-        }
-
-        ropeObject.transform.position = midPoint;
-        ropeObject.transform.localScale = new Vector3(ropeWidth, distance / 2f, ropeWidth);
-
-        // 플레이어와 연결된 오브젝트 간의 방향 벡터 계산
-        Vector3 direction = (connectedObject.position - player.position).normalized;
-
-        // 로프를 연결된 오브젝트의 방향으로 회전
-        ropeObject.transform.up = direction;
-
-        // 장애물 검사
         RaycastHit hit;
-        if (Physics.Raycast(midPoint, direction, out hit, distance, obstacleLayer))
+        // 플레이어에서 마지막 세그먼트까지의 라인 캐스트를 수행하고, 충돌이 감지되면 로프 조정
+        if (Physics.Linecast(player.position, rope.GetPosition(ropePositions.Count - 2), out hit, collMask))
         {
-            // 장애물이 있으면 장애물의 표면에 따라 로프를 회전
-            Vector3 hitNormal = hit.normal;
-            ropeObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitNormal);
+            ropePositions.RemoveAt(ropePositions.Count - 1);
+            AddPosToRope(hit.point);
         }
     }
+
+    private void DetectCollisionExits()
+    {
+        RaycastHit hit;
+        // 플레이어에서 두 번째 마지막 세그먼트까지의 라인 캐스트를 수행하고, 충돌이 없으면 로프 조정
+        if (!Physics.Linecast(player.position, rope.GetPosition(ropePositions.Count - 3), out hit, collMask))
+        {
+            ropePositions.RemoveAt(ropePositions.Count - 2);
+        }
+    }
+
+    private void AddPosToRope(Vector3 _pos)
+    {
+        ropePositions.Add(_pos);
+        ropePositions.Add(player.position); // 항상 마지막 위치는 플레이어 위치여야 함
+    }
+
+    private void UpdateRopePositions()
+    {
+        rope.positionCount = ropePositions.Count;
+        rope.SetPositions(ropePositions.ToArray());
+    }
+
+    private void LastSegmentGoToPlayerPos() => rope.SetPosition(rope.positionCount - 1, player.position);
 }

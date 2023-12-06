@@ -406,7 +406,6 @@ MonoBehaviour:
     m_Bits: 0
   startPoint:
   - {fileID: 0}
-  endPoint: {fileID: 0}
   segments: 10
   maxDistance: 5
   ropeWidth: 0.1

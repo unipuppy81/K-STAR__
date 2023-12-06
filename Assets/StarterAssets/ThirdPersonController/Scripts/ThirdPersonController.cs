@@ -1,4 +1,5 @@
 ﻿using Photon.Pun.Demo.Cockpit;
+using System.Collections;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -138,6 +139,10 @@ namespace StarterAssets
         private float dashCooldownTimer;
 
 
+        [Header("MaxLength")]
+        public bool isMaxLength;
+
+
         private void Awake()
         {
             // get a reference to our main camera
@@ -179,6 +184,7 @@ namespace StarterAssets
             Dash();
             LCtrl();
             UpdateDashTimer();
+            MaxLengthRope();
             //if (Input.GetKeyDown(KeyCode.Space)) { jumpCount++; if (jumpCount == 2) { _canDoubleJump = false; jumpCount = 0; } }
         }
 
@@ -196,6 +202,16 @@ namespace StarterAssets
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
+        void MaxLengthRope()
+        {
+            if (isMaxLength)
+            {
+                if (_hasAnimator)
+                {
+                    StartCoroutine("MaxLengthR");
+                }
+            }
+        }
         void LCtrl()
         {
             if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -711,5 +727,32 @@ namespace StarterAssets
                 isCongE = true;
             }
         }
+
+
+        /* ==============================   코루틴    ====================================== */
+    
+        IEnumerator MaxLengthR()
+        {
+
+            _animator.SetBool("MaxLength", true);
+            yield return new WaitForSeconds(1.0f);
+
+
+            _animator.SetBool("MaxLength", false);
+
+
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     }
 }

@@ -1,5 +1,8 @@
+using StarterAssets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using Unity.VisualScripting.InputSystem;
 using UnityEngine;
 
@@ -18,6 +21,9 @@ public class Rope3 : MonoBehaviour
     private LineRenderer lineRenderer;
 
 
+    public bool isMaxLength;
+
+
     void Start()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
@@ -34,6 +40,10 @@ public class Rope3 : MonoBehaviour
         { 
             // 실시간으로 로프 업데이트
             UpdateRope();
+            if (isMaxLength)
+            {
+                MaxLength();
+            }
         }
     }
 
@@ -51,14 +61,26 @@ public class Rope3 : MonoBehaviour
         startRope = true;
     }
 
+
     void UpdateRope()
     {
-        float distance = Vector3.Distance(startPoint[0].position, startPoint[1].position);
+        Vector3 direction = (startPoint[1].position - startPoint[0].position).normalized;
+        float currentDistance = Vector3.Distance(startPoint[0].position, startPoint[1].position);
+
+        // startPoint[0]의 움직임에 따라 startPoint[1]이 따라오도록 설정
+        startPoint[1].position = startPoint[0].position + direction * currentDistance;
+
+        // startPoint[1]의 움직임에 따라 startPoint[0]이 따라오도록 설정
+        startPoint[0].position = startPoint[1].position - direction * currentDistance;
 
         // 최대 거리 제한
-        if (distance > maxDistance)
+        if (currentDistance > maxDistance)
         {
-            startPoint[1].position = startPoint[0].position + (startPoint[1].position - startPoint[0].position).normalized * maxDistance;
+            // 최대 거리에 도달하면 두 지점을 고정
+            startPoint[0].position = startPoint[1].position - direction * maxDistance;
+            startPoint[1].position = startPoint[0].position + direction * maxDistance;
+
+            isMaxLength = true;
         }
 
         lineRenderer.positionCount = segments + 1;
@@ -70,4 +92,42 @@ public class Rope3 : MonoBehaviour
             lineRenderer.SetPosition(i, pos);
         }
     }
+
+    void MaxLength()
+    {
+        foreach(var a in startPoint)
+        {
+            a.gameObject.GetComponent<ThirdPersonController>().isMaxLength = true;
+        }
+    }
+    /*
+    void UpdateRope()
+    {
+        float distance = Vector3.Distance(startPoint[0].position, startPoint[1].position);
+
+        // 최대 거리 제한
+        if (distance > maxDistance)
+        {
+            startPoint[1].position = startPoint[0].position + (startPoint[1].position - startPoint[0].position).normalized * maxDistance;
+            startPoint[0].GetComponent<Rigidbody>().isKinematic = true;
+            startPoint[1].GetComponent<Rigidbody>().isKinematic = true;
+        }
+        else
+        {
+            startPoint[0].GetComponent<Rigidbody>().isKinematic = false;
+            startPoint[1].GetComponent<Rigidbody>().isKinematic = false;
+        }
+
+
+
+        lineRenderer.positionCount = segments + 1;
+
+        for (int i = 0; i <= segments; i++)
+        {
+            float t = i / (float)segments;
+            Vector3 pos = Vector3.Lerp(startPoint[0].position, startPoint[1].position, t);
+            lineRenderer.SetPosition(i, pos);
+        }
+    }
+    */
 }

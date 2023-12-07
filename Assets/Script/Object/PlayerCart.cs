@@ -8,6 +8,12 @@ public class PlayerCart : MonoBehaviourPunCallbacks
     private GameObject targetObject;
     private bool isOnObject = false;
 
+    // 도착지점을 저장할 변수들
+    private Vector3 player1Destination = new Vector3(-90f, -10f, -80f);
+    private Vector3 player2Destination = new Vector3(-90f, -10f, -90f);
+
+    public float fuck;
+
     private void Update()
     {
         if (photonView.IsMine)
@@ -46,8 +52,11 @@ public class PlayerCart : MonoBehaviourPunCallbacks
         transform.SetParent(targetObject.transform);
         transform.localPosition = Vector3.zero;
 
+        // 각 플레이어에 따른 도착지점 설정
+        Vector3 targetPosition = (photonView.Owner.ActorNumber == 1) ? player1Destination : player2Destination;
+
         // 오브젝트가 목표 지점까지 이동하는 코루틴 시작
-        StartCoroutine(MoveToObject());
+        StartCoroutine(MoveToObject(targetPosition));
     }
 
     [PunRPC]
@@ -63,12 +72,9 @@ public class PlayerCart : MonoBehaviourPunCallbacks
         isOnObject = false;
     }
 
-    private IEnumerator MoveToObject()
+    private IEnumerator MoveToObject(Vector3 targetPosition)
     {
         isOnObject = true;
-
-        // 정해진 목표 위치 (임의로 지정)
-        Vector3 targetPosition = new Vector3(8f, -2f, 10f);
 
         while (Vector3.Distance(targetObject.transform.position, targetPosition) > 0.1f)
         {
@@ -76,7 +82,7 @@ public class PlayerCart : MonoBehaviourPunCallbacks
             targetObject.transform.position = Vector3.MoveTowards(targetObject.transform.position, targetPosition, Time.deltaTime * 5f);
 
             // 플레이어도 오브젝트와 함께 이동
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * 0.1f);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * fuck);
 
             yield return null;
         }

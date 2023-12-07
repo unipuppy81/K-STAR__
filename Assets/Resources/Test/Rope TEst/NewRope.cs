@@ -64,7 +64,7 @@ public class NewRope : MonoBehaviour
         lineRenderer.SetPosition(0, startPoint[0].position);
         lineRenderer.SetPosition(1, startPoint[1].position);
 
-        float currentRopeLength = Vector3.Distance(player1.position, player2.position);
+        float currentRopeLength = Vector3.Distance(startPoint[0].position, startPoint[1].position);
 
         if (currentRopeLength > maxRopeLength)
         {

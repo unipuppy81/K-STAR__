@@ -178,14 +178,17 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-                GroundedCheck();
+            if (!isMaxLength)
+            {
                 JumpAndGravity2();
                 JumpAndGravity1();
                 Move();
                 Dash();
-                LCtrl();
                 UpdateDashTimer();
+                LCtrl();
+            }
 
+            GroundedCheck();
             MaxLengthRope();
             
 

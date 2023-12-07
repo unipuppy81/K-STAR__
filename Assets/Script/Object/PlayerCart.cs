@@ -38,8 +38,6 @@ public class PlayerCart : MonoBehaviourPunCallbacks
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, 2f))
         {
-            Debug.Log("Raycast : " + hit.collider.gameObject.name);
-            Debug.Log("TTTT");
             targetObject = hit.collider.gameObject;
             photonView.RPC("EnterObject", RpcTarget.All);
             if (hit.collider.tag == "InteractableObject")

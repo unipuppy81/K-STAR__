@@ -25,7 +25,9 @@ public class NewRope : MonoBehaviour
     void Start()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-
+        lineRenderer.material.color = Color.gray;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
         if (lineRenderer == null || player1 == null || player2 == null)
         {
 

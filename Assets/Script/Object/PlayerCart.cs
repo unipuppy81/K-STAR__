@@ -8,9 +8,10 @@ public class PlayerCart : MonoBehaviourPunCallbacks
     private GameObject targetObject;
     private bool isOnObject = false;
 
+
     // 도착지점을 저장할 변수들
-    private Vector3 player1Destination = new Vector3(-90f, -10f, -80f);
-    private Vector3 player2Destination = new Vector3(-90f, -10f, -90f);
+    private Vector3 player1Destination = new Vector3(-86f, 1.5f, -73.5f);
+    private Vector3 player2Destination = new Vector3(-86f, 1.5f, -83.5f);
 
     public float fuck;
 
@@ -37,10 +38,13 @@ public class PlayerCart : MonoBehaviourPunCallbacks
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, 2f))
         {
-            if (hit.collider.CompareTag("InteractableObject"))
+            Debug.Log("Raycast : " + hit.collider.gameObject.name);
+            Debug.Log("TTTT");
+            targetObject = hit.collider.gameObject;
+            photonView.RPC("EnterObject", RpcTarget.All);
+            if (hit.collider.tag == "InteractableObject")
             {
-                targetObject = hit.collider.gameObject;
-                photonView.RPC("EnterObject", RpcTarget.All);
+
             }
         }
     }

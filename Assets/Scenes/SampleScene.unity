@@ -2964,6 +2964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WIndmill
       objectReference: {fileID: 0}
+    - target: {fileID: 6501833255018314430, guid: 60bea412fdd50614bbc4524dcb37a9ec, type: 3}
+      propertyPath: sceneViewId
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6751352795544436306, guid: 60bea412fdd50614bbc4524dcb37a9ec, type: 3}
       propertyPath: m_RootOrder
       value: 1

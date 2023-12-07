@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class OjingU2 : MonoBehaviour
+public class OjingU : MonoBehaviour
 {
     public float moveAmount = 5f;
     private bool isPlayerOnPlatform = false;
@@ -23,7 +23,7 @@ public class OjingU2 : MonoBehaviour
         // PhotonView가 없다면 경고 출력
         if (photonView == null)
         {
-            return;
+            Debug.LogError("PhotonView is not found on this GameObject.");
         }
     }
 
@@ -76,7 +76,7 @@ public class OjingU2 : MonoBehaviour
 
     private void MovePlatform()
     {
-        block.transform.Translate(Vector3.down* moveAmount * Time.deltaTime);
+        block.transform.Translate(Vector3.right * moveAmount * Time.deltaTime);
 
         // Photon 네트워크를 통해 위치 동기화
         photonView.RPC("SyncPlatformPosition", RpcTarget.Others, transform.position);
@@ -89,7 +89,7 @@ public class OjingU2 : MonoBehaviour
 
         while (timer < resetDuration)
         {
-            block.transform.Translate(Vector3.forward * moveAmount * Time.deltaTime);
+            block.transform.Translate(Vector3.right * moveAmount * Time.deltaTime);
             timer += Time.deltaTime;
             yield return null;
         }
@@ -106,7 +106,7 @@ public class OjingU2 : MonoBehaviour
 
         while (timer < resetDuration)
         {
-            block.transform.Translate(Vector3.back* moveAmount * Time.deltaTime);
+            block.transform.Translate(Vector3.left * moveAmount * Time.deltaTime);
             timer += Time.deltaTime;
             yield return null;
         }

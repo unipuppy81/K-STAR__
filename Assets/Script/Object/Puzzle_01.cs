@@ -9,6 +9,7 @@ public class Puzzle_01 : MonoBehaviour
     private bool isPlayerOnPlatform = false;
     private PhotonView photonView;
     public GameObject block;
+    public Animator ani;
 
     private float elapsedTime = 0f;
     private bool canMove = true;
@@ -17,6 +18,7 @@ public class Puzzle_01 : MonoBehaviour
     {
         // PhotonView를 참조할 변수에 할당
         photonView = GetComponent<PhotonView>();
+        ani = GetComponent<Animator>(); 
 
         // PhotonView가 없다면 경고 출력
         if (photonView == null)
@@ -29,6 +31,7 @@ public class Puzzle_01 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            ani.SetTrigger("isTrigger");
             //isPlayerOnPlatform = true;
 
             // Photon 네트워크를 통해 상태 동기화

@@ -178,18 +178,17 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            if (!isMaxLength)
-            {
+
                 JumpAndGravity2();
                 JumpAndGravity1();
                 Move();
                 Dash();
                 UpdateDashTimer();
                 LCtrl();
-            }
+
 
             GroundedCheck();
-            MaxLengthRope();
+           // MaxLengthRope();
             
 
             //if (Input.GetKeyDown(KeyCode.Space)) { jumpCount++; if (jumpCount == 2) { _canDoubleJump = false; jumpCount = 0; } }
@@ -273,7 +272,7 @@ namespace StarterAssets
                 dashCooldownTimer -= Time.deltaTime;
             }
 
-            if (MoveSpeed >= 3.0f) { MoveSpeed -= Time.deltaTime * 30.0f; }
+            if (MoveSpeed >= 9.0f) { MoveSpeed -= Time.deltaTime * 30.0f; }
         }
 
         private void GroundedCheck()

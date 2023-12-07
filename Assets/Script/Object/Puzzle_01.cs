@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Puzzle_01 : MonoBehaviour
 {
-    public float moveAmount = 8f;
+    public float moveAmount = 10f;
     private bool isPlayerOnPlatform = false;
     private PhotonView photonView;
     public GameObject block;
@@ -54,25 +54,12 @@ public class Puzzle_01 : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerOnPlatform && photonView.IsMine)
-        {
-            elapsedTime += Time.deltaTime;
 
-            if (canMove && elapsedTime < 1f)
-            {
-                MovePlatform();
-            }
-            else
-            {
-                canMove = false;
-                // 1초가 지나면 canMove를 false로 설정하여 이후의 이동을 막습니다.
-            }
-        }
     }
 
     private void MovePlatform()
     {
-        block.transform.Translate(Vector3.up * moveAmount * Time.deltaTime);
+        block.transform.Translate(Vector3.left * moveAmount * Time.deltaTime);
 
         // Photon 네트워크를 통해 위치 동기화
         photonView.RPC("SyncPlatformPosition", RpcTarget.Others, transform.position);
@@ -80,7 +67,7 @@ public class Puzzle_01 : MonoBehaviour
 
     private IEnumerator MoveBlock()
     {
-        float resetDuration = 1f;
+        float resetDuration = 3f;
         float timer = 0f;
 
         while (timer < resetDuration)
@@ -97,7 +84,7 @@ public class Puzzle_01 : MonoBehaviour
     private IEnumerator ResetPlatform()
     {
         // 충돌이 끝나면 호출되어 1초 동안 y축으로 -3만큼 이동하고 canMove를 true로 설정하여 이후의 이동을 가능하게 합니다.
-        float resetDuration = 1f;
+        float resetDuration = 3f;
         float timer = 0f;
 
         while (timer < resetDuration)

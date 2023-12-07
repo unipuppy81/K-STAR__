@@ -505,6 +505,9 @@ GameObject:
   - component: {fileID: 8765825856103837969}
   - component: {fileID: 8710682043522216385}
   - component: {fileID: 5326892317494619315}
+  - component: {fileID: 5389973492541099566}
+  - component: {fileID: -8257588645140408056}
+  - component: {fileID: 2527057196358317900}
   m_Layer: 0
   m_Name: RopeSetter
   m_TagString: Untagged
@@ -557,7 +560,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8769278383924260873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36ea35cacac2e3240ae7bdbc3825bfd4, type: 3}
   m_Name: 
@@ -574,6 +577,68 @@ MonoBehaviour:
   maxDistance: 5
   ropeWidth: 0.1
   isMaxLength: 0
+--- !u!114 &5389973492541099566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769278383924260873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281b46cf73b12ec4bbd432d0e215065f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+  maxRopeLength: 5
+  startPoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  startRope: 0
+  detectionRadius: 5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  startRope1: 0
+--- !u!114 &-8257588645140408056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769278383924260873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2527057196358317900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8769278383924260873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &8769285030487870759
 GameObject:
   m_ObjectHideFlags: 0

@@ -6423,6 +6423,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8257588645140408056, guid: 264a564d7169cd649986b83e1b576310, type: 3}
+      propertyPath: sceneViewId
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: -8257588645140408056, guid: 264a564d7169cd649986b83e1b576310, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8765825856103837969, guid: 264a564d7169cd649986b83e1b576310, type: 3}
       propertyPath: m_RootOrder
       value: 1

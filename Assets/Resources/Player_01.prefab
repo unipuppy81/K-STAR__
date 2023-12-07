@@ -205,7 +205,7 @@ MonoBehaviour:
   LandingAudioClip: {fileID: 0}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
-  JumpHeight: 5
+  JumpHeight: 10
   Gravity: -50
   JumpTimeout: 0
   FallTimeout: 0.15

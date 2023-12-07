@@ -83,8 +83,11 @@ public class Rope3 : MonoBehaviour
         if (currentDistance > maxDistance)
         {
             // 최대 거리에 도달하면 두 지점을 고정
-            startPoint[0].position = startPoint[1].position - direction * maxDistance;
-            startPoint[1].position = startPoint[0].position + direction * maxDistance;
+            float newDistance = Mathf.Min(currentDistance, maxDistance);
+
+            startPoint[0].position = startPoint[1].position - direction * newDistance;
+            startPoint[1].position = startPoint[0].position + direction * newDistance;
+
 
             isMaxLength = true;
         }

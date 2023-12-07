@@ -745,10 +745,11 @@ namespace StarterAssets
 
             _animator.SetBool("MaxLength", true);
             Debug.Log("A");
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(3.0f);
 
 
             _animator.SetBool("MaxLength", false);
+            isMaxLength = false;
             Debug.Log("B");
 
         }

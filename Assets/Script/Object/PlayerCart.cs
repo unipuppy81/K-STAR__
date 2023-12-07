@@ -19,7 +19,7 @@ public class PlayerCart : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 if (isOnObject)
                 {

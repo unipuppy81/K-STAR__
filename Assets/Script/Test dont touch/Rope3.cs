@@ -37,11 +37,12 @@ public class Rope3 : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.U)) { ClickObject(); }
 
         if(startRope) 
-        { 
-            // 실시간으로 로프 업데이트
+        {
             UpdateRope();
+            // 실시간으로 로프 업데이트
             if (isMaxLength)
             {
+
                 MaxLength();
             }
         }
@@ -64,6 +65,11 @@ public class Rope3 : MonoBehaviour
 
     void UpdateRope()
     {
+        if(startPoint.Length < 2)
+        {
+            return;
+        }
+
         Vector3 direction = (startPoint[1].position - startPoint[0].position).normalized;
         float currentDistance = Vector3.Distance(startPoint[0].position, startPoint[1].position);
 

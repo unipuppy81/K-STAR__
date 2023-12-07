@@ -1756,10 +1756,10 @@ MonoBehaviour:
   startPoint:
   - {fileID: 0}
   - {fileID: 0}
-  endPoint: {fileID: 0}
   segments: 10
   maxDistance: 5
   ropeWidth: 0.1
+  isMaxLength: 0
 --- !u!114 &1549390566
 MonoBehaviour:
   m_ObjectHideFlags: 0

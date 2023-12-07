@@ -226,6 +226,7 @@ MonoBehaviour:
   dashSpeed: 15
   dashDuration: 0.5
   dashCooldown: 2
+  isMaxLength: 0
 --- !u!114 &1919528402914777923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,6 +410,7 @@ MonoBehaviour:
   segments: 10
   maxDistance: 5
   ropeWidth: 0.1
+  isMaxLength: 0
 --- !u!1 &4988946839034984645
 GameObject:
   m_ObjectHideFlags: 0

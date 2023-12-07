@@ -141,7 +141,7 @@ namespace StarterAssets
 
         [Header("MaxLength")]
         public bool isMaxLength;
-
+        private bool isKeyboardDisabled = false;
 
         private void Awake()
         {
@@ -177,14 +177,18 @@ namespace StarterAssets
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
-            JumpAndGravity2();
-            JumpAndGravity1();
-            GroundedCheck();
-            Move();
-            Dash();
-            LCtrl();
-            UpdateDashTimer();
+
+                GroundedCheck();
+                JumpAndGravity2();
+                JumpAndGravity1();
+                Move();
+                Dash();
+                LCtrl();
+                UpdateDashTimer();
+
             MaxLengthRope();
+            
+
             //if (Input.GetKeyDown(KeyCode.Space)) { jumpCount++; if (jumpCount == 2) { _canDoubleJump = false; jumpCount = 0; } }
         }
 
@@ -209,6 +213,8 @@ namespace StarterAssets
                 if (_hasAnimator)
                 {
                     StartCoroutine("MaxLengthR");
+                    _animator.SetFloat("Speed", 0);
+                    _animator.SetBool("Jump", false);
                 }
             }
         }
@@ -735,6 +741,7 @@ namespace StarterAssets
         {
 
             _animator.SetBool("MaxLength", true);
+
             yield return new WaitForSeconds(1.0f);
 
 

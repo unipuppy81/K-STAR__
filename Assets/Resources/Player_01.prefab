@@ -104,7 +104,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4988133431676656043}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.2138421, w: 0.97686833}
   m_LocalPosition: {x: 79.027, y: -0.032000005, z: 125.047}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
@@ -116,7 +116,7 @@ Transform:
   - {fileID: 4953633615581833022}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 24.695}
 --- !u!95 &4931142386305474885
 Animator:
   serializedVersion: 4
@@ -148,8 +148,8 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.3
-  m_Radius: 0.15
+  m_Height: 0.24
+  m_Radius: 0.09
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -320,6 +320,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: Jump
+  - Type: 4
+    SynchronizeType: 0
+    Name: MaxLength
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0

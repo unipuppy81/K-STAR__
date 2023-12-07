@@ -1,4 +1,5 @@
 ﻿using Photon.Pun.Demo.Cockpit;
+using System.Collections;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -138,6 +139,10 @@ namespace StarterAssets
         private float dashCooldownTimer;
 
 
+        [Header("MaxLength")]
+        public bool isMaxLength;
+        private bool isKeyboardDisabled = false;
+
         private void Awake()
         {
             // get a reference to our main camera
@@ -172,13 +177,21 @@ namespace StarterAssets
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
-            JumpAndGravity2();
-            JumpAndGravity1();
+
+            if (!isMaxLength)
+            {
+                JumpAndGravity2();
+                JumpAndGravity1();
+                Move();
+                Dash();
+                UpdateDashTimer();
+                LCtrl();
+            }
+
             GroundedCheck();
-            Move();
-            Dash();
-            LCtrl();
-            UpdateDashTimer();
+            MaxLengthRope();
+            
+
             //if (Input.GetKeyDown(KeyCode.Space)) { jumpCount++; if (jumpCount == 2) { _canDoubleJump = false; jumpCount = 0; } }
         }
 
@@ -196,6 +209,18 @@ namespace StarterAssets
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
+        void MaxLengthRope()
+        {
+            if (isMaxLength)
+            {
+                if (_hasAnimator)
+                {
+                    StartCoroutine("MaxLengthR");
+                    _animator.SetFloat("Speed", 0);
+                    _animator.SetBool("Jump", false);
+                }
+            }
+        }
         void LCtrl()
         {
             if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -711,5 +736,34 @@ namespace StarterAssets
                 isCongE = true;
             }
         }
+
+
+        /* ==============================   코루틴    ====================================== */
+    
+        IEnumerator MaxLengthR()
+        {
+
+            _animator.SetBool("MaxLength", true);
+            Debug.Log("A");
+            yield return new WaitForSeconds(3.0f);
+
+
+            _animator.SetBool("MaxLength", false);
+            isMaxLength = false;
+            Debug.Log("B");
+
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     }
 }
